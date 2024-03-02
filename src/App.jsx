@@ -14,6 +14,8 @@ const App = () => {
   const [selectedImage, setSelectedImage] = useState('');
   const [searchTopic, setSearchTopic] = useState('');
   const [page, setPage] = useState(1);
+  const [imgModal, setImgModal] = useState('');
+
   const fetchImagesWithTopic = async (topic, pageNum) => {
     const response = await axios.get(`https://api.unsplash.com/search/photos`, {
       params: {
@@ -42,14 +44,11 @@ const App = () => {
     }
   };
 
-  const openModal = (imageUrl) => {
-    setSelectedImage(imageUrl);
+  const toggleModal = () => setModalIsOpen(prev => !prev);
+  
+  const handleModal = img => {
+    setImgModal(img);
     setModalIsOpen(true);
-  };
-
-  // Function to close modal
-  const closeModal = () => {
-    setModalIsOpen(false);
   };
 
   const loadMoreImages = async () => {
@@ -71,9 +70,8 @@ const App = () => {
       <SearchBar onSearch={handleSearch} />
       {loading && <p>Loading...</p>}
       {error && <p>Whoops, something went wrong! Please try again later.</p>}
-      <ImageGallery images={articles} openModal={openModal} />
-      {/* Render ImageModal component */}
-      <ImageModal isOpen={modalIsOpen} imageUrl={selectedImage} onClose={closeModal} />
+      <ImageGallery images={articles} openModal={handleModal} />
+      {modalIsOpen && <ImageModal imgURL={imgModal} toggleModal={toggleModal} />}
       {articles.length > 0 && <LoadMoreBtn onClick={loadMoreImages} />}
     </div>
   );

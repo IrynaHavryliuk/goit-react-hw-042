@@ -1,29 +1,32 @@
+import { useEffect } from 'react';
+import css from './ImageModal.module.css';
 
-import Modal from 'react-modal';
+const ImageModal = ({ toggleModal, imgURL }) => {
+  useEffect(() => {
+    const handleClickEsc = e => {
+      if (e.code === 'Escape') {
+        toggleModal();
+      }
+    };
 
-const ImageModal = ({ isOpen, imageUrl, onClose }) => {
+    document.addEventListener('keydown', handleClickEsc);
+    return () => {
+      document.removeEventListener('keydown', handleClickEsc);
+    };
+  }, [toggleModal]);
+
+  const handleOverlay = e => {
+    if (e.target === e.currentTarget) {
+      toggleModal();
+    }
+  };
+
   return (
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={onClose}
-      contentLabel="Image Modal"
-      style={{
-        overlay: {
-          backgroundColor: 'rgba(0, 0, 0, 0.5)'
-        },
-        content: {
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          border: 'none',
-          background: 'none',
-          overflow: 'hidden'
-        }
-      }}
-    >
-      <button onClick={onClose}>Close</button>
-      <img src={imageUrl} alt="Large" style={{ maxWidth: '100%', maxHeight: '100%' }} />
-    </Modal>
+    <div className={css.overlay} onClick={handleOverlay}>
+      <div className={css.modal}>
+        <img src={imgURL} alt="" />
+      </div>
+    </div>
   );
 };
 
