@@ -8,15 +8,15 @@ const fetchImages = async (query, page) => {
       params: {
         query: query,
         page: page,
-        per_page: '16',
-        client_id: apiKey // Using apiKey variable
+        per_page: '12',
+        client_id: apiKey 
       }
     });
     const newImages = response.data.results.map(image => ({
       id: image.id,
-      webformatURL: image.urls.small, // Adjusted to use the appropriate property
-      largeImageURL: image.urls.full, // Adjusted to use the appropriate property
-      alt: image.alt_description // Adjusted to use the appropriate property
+      webformatURL: image.urls.small,
+      largeImageURL: image.urls.full, 
+      alt: image.alt_description 
     }));
     return newImages;
   } catch (error) {

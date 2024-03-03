@@ -1,5 +1,6 @@
 .SearchContainer {
-  border-radius: 6px;
+  /* border-radius: 6px; */
+  border: none;
  margin: 0 auto;
  margin-left: 5px;
  width: 100%;
@@ -24,13 +25,15 @@
 }
 
 .SearchInput {
- max-width: 250px;
+ width: 300px;
  flex: 1;
  height: 40px;
- padding-right: 60px;
+ padding-right: 70px;
  margin: 0 auto;
- border-radius: 6px;
- 
+ /* border-radius: 6px; */
+ border: none; 
+ font-size: small;
+ justify-content: end;
 }
 
 .SearchButton {
@@ -38,14 +41,18 @@
  border: none;
  background: none;
  cursor: pointer;
- right: 55px;
- top: 22px;
+ /* right: 10px; */
+ top: 21px;
  transform: translateY(-50%);
+ background-color: #fff;
 }
-
 .SearchIcon {
- color: #3e3a3a; 
+ color: #938f8fed; 
  height: 24px;
  width: 24px;
  align-self: center;
+
+}
+.SearchIcon:hover {
+  border: none;
 }

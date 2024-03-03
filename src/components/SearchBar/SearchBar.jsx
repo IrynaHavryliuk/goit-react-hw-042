@@ -25,7 +25,7 @@ const SearchBar = ({ onSubmit }) => {
           value={query}
           onChange={handleChange}
           className={styles.SearchInput}
-          placeholder="Search images..."
+          placeholder="Search images and photos"
         />
         
       </div>

@@ -15,6 +15,8 @@ const App = () => {
   const [largeImageURL, setLargeImageURL] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [hasMoreImages, setHasMoreImages] = useState(true);
+  const [error, setError] = useState(false);
+
 
   const fetchData = useCallback(async () => {
     try {
@@ -47,6 +49,7 @@ const App = () => {
     setHasMoreImages(true);
     fetchData();
     setLoading(true);
+    setError(false);
   };
 
   const handleInitialLoad = useCallback(() => {
@@ -87,6 +90,7 @@ const App = () => {
   return (
     <div className={styles.App}>
       <SearchBar onSubmit={handleSearch} />
+      {error && <p>Whoops, something went wrong! Please try again later.</p>}
       <ImageGallery images={images} onImageClick={handleImageClick} />
       {loading && <Loader />}
       {hasMoreImages && <Button onClick={handleLoadMore}>Load more</Button>}
