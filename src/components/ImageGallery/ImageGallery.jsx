@@ -1,20 +1,31 @@
-import ImageCard from '../ImageCard/ImageCard';
-import style from './ImageGallery.module.css'
+import PropTypes from 'prop-types';
+import styles from './ImageGallery.module.css';
 
-const ImageGallery = ({ images }) => {
-  if (images.length === 0) {
-    return null;
-  }
+const ImageGallery = ({ images, onImageClick }) => (
+  <ul className={styles.ImageGallery}>
+    {images.map(image => (
+      <li key={image.id} className={styles.ImageGalleryItem}>
+        <img
+          src={image.webformatURL}
+          alt={image.alt}
+          className={styles.ImageGalleryItemImage}
+          onClick={() => onImageClick(image.largeImageURL)}
+        />
+      </li>
+    ))}
+  </ul>
+);
 
-  return (
-    <ul className={style.gallery}>
-      {images.map(({ id, urls }) => (
-        <li className={style.li} key={id}>
-          <ImageCard imageUrl={urls.small} />
-        </li>
-      ))}
-    </ul>
-  );
+ImageGallery.propTypes = {
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      webformatURL: PropTypes.string.isRequired,
+      largeImageURL: PropTypes.string.isRequired,
+      alt: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  onImageClick: PropTypes.func.isRequired,
 };
 
 export default ImageGallery;

@@ -1,23 +1,35 @@
+import Readct, { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import styles from './SearchBar.module.css';
 
-export const SearchBar = ({ onSearch }) => {
-  
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    const form = evt.target;
-    const topic = form.elements.topic.value;
-    onSearch(topic);
-    form.reset();
+const SearchBar = ({ onSubmit }) => {
+  const [query, setQuery] = useState('');
+
+  const handleChange = event => {
+    setQuery(event.target.value);
+  };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    onSubmit(query);
   };
 
   return (
-    <div className={styles.container}>
-      <form onSubmit={handleSubmit} className={styles['search-form']}>
-        <FaSearch className={styles['search-icon']} />
-        <input type="text" name="topic" placeholder="Search images and photos" />
-      </form>
-    </div>
+    <form className={styles.SearchContainer} onSubmit={handleSubmit}>
+      <div className={styles.SearchInputContainer}>
+      <button type="submit" className={styles.SearchButton}>
+          <FaSearch className={styles.SearchIcon} />
+        </button>
+        <input
+          type="text"
+          value={query}
+          onChange={handleChange}
+          className={styles.SearchInput}
+          placeholder="Search images..."
+        />
+        
+      </div>
+    </form>
   );
 };
 
