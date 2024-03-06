@@ -1,8 +1,8 @@
 import  { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import styles from './Modal.module.css';
+import styles from './ImageModal.module.css';
 
-const Modal = ({ largeImageURL, alt, onClose }) => {
+const ImageModal = ({ largeImageURL, alt, onClose }) => {
   useEffect(() => {
     const handleKeyDown = e => {
       if (e.code === 'Escape') {
@@ -32,10 +32,10 @@ const Modal = ({ largeImageURL, alt, onClose }) => {
   );
 };
 
-Modal.propTypes = {
+ImageModal.propTypes = {
   largeImageURL: PropTypes.string.isRequired,
   alt: PropTypes.string,
   onClose: PropTypes.func.isRequired,
 };
 
-export default Modal;
+export default ImageModal;

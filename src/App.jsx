@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import SearchBar from './components/SearchBar/SearchBar';
 import ImageGallery from './components/ImageGallery/ImageGallery';
-import Button from './components/Button/Button';
-import Modal from './components/Modal/Modal';
+import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn';
+import ImageModal from './components/ImageModal/ImageModal';
 import Loader from './components/Loader/Loader';
 import styles from './App.module.css';
 import { fetchImages as fetchImagesData } from './components/Api/Api';
@@ -41,6 +41,11 @@ const App = () => {
   }, [query, page, setImages, setHasMoreImages, setLoading]);
 
   const handleSearch = newQuery => {
+    if (!newQuery.trim()) {
+      setError(true);
+      return;
+    }
+  
     setQuery(newQuery);
     setPage(1);
     setImages([]);
@@ -93,9 +98,9 @@ const App = () => {
       {error && <p>Whoops, something went wrong! Please try again later.</p>}
       <ImageGallery images={images} onImageClick={handleImageClick} />
       {loading && <Loader />}
-      {hasMoreImages && <Button onClick={handleLoadMore}>Load more</Button>}
+      {hasMoreImages && <LoadMoreBtn onClick={handleLoadMore}>Load more</LoadMoreBtn>}
       {showModal && (
-        <Modal onClose={handleCloseModal} largeImageURL={largeImageURL} />
+        <ImageModal onClose={handleCloseModal} largeImageURL={largeImageURL} />
       )}
     </div>
   );
