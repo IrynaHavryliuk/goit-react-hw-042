@@ -1,41 +1,43 @@
-import  { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import styles from './ImageModal.module.css';
+import Modal from 'react-modal';
+import css from './ImageModal.module.css';
 
-const ImageModal = ({ largeImageURL, alt, onClose }) => {
-  useEffect(() => {
-    const handleKeyDown = e => {
-      if (e.code === 'Escape') {
-        onClose();
-      }
-    };
+Modal.setAppElement('#root');
 
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [onClose]);
-
-  const handleOverlayClick = e => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
-
+const ImageModal = ({
+  closeModal,
+  modalIsOpen,
+  imageSrc = 'https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg',
+  imageAltDescription = 'Regular gallery image',
+  imageDescription = 'Big image not found',
+  imageAutor = 'Unknown',
+  imageLikes = '0',
+}) => {
   return (
-    <div className={styles.Overlay} onClick={handleOverlayClick}>
-      <div className={styles.Modal}>
-        <img className={styles.ModalImage} src={largeImageURL} alt={alt} />
+    <Modal
+      isOpen={modalIsOpen}
+      onRequestClose={closeModal}
+      className={css.Modal}
+      overlayClassName={css.Overlay}
+    >
+      {' '}
+      <div className={css.modalContainer}>
+        <div className={css.imageContainer}>
+          <img className={css.image} src={imageSrc} alt={imageAltDescription} />
+        </div>
+        <div className={css.imageDescription}>
+          <p>{imageDescription}</p>
+        </div>
+        <ul className={css.addImageInfo}>
+          <li>
+            <p>Author: {imageAutor}</p>
+          </li>
+          <li>
+            <p>Likes: {imageLikes}</p>
+          </li>
+        </ul>
       </div>
-    </div>
+    </Modal>
   );
-};
-
-ImageModal.propTypes = {
-  largeImageURL: PropTypes.string.isRequired,
-  alt: PropTypes.string,
-  onClose: PropTypes.func.isRequired,
 };
 
 export default ImageModal;

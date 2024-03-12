@@ -1,25 +1,36 @@
 .Overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.8);
-  z-index: 1200;
+  inset: 0px;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 100;
 }
-
 .Modal {
   position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+  inset: 50% auto auto 50%;
+  border: none;
+  background: transparent;
+  overflow: auto;
+  border-radius: 4px;
+  outline: none;
+  padding: 20px;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  max-width: 100vh;
+  max-height: 100vh;
+  transition: all 0.2s ease-in-out;
 }
-
-.ModalImage {
-  display: block;
+.image {
   max-width: 100%;
-  height: auto;
+  max-height: 80vh;
+  margin: 0 auto;
+}
+.imageDescription {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+}
+.addImageInfo {
+  display: flex;
+  justify-content: space-between;
+  color: #fff;
 }

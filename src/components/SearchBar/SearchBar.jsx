@@ -1,35 +1,46 @@
-import  { useState } from 'react';
-import { FaSearch } from 'react-icons/fa';
-import styles from './SearchBar.module.css';
+import { CiSearch } from 'react-icons/ci';
+import toast, { Toaster } from 'react-hot-toast';
 
-const SearchBar = ({ onSubmit }) => {
-  const [query, setQuery] = useState('');
+import css from './SearchBar.module.css';
 
-  const handleChange = event => {
-    setQuery(event.target.value);
-  };
-
-  const handleSubmit = event => {
+const SearchBar = ({ onSearch }) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit(query);
+    const form = event.target;
+    const searchValue = form.elements.searchInput.value;
+
+    if (searchValue.trim() === '') {
+      toast.error('Please enter the search term!', {
+        position: 'top-right',
+      });
+      return;
+    }
+    onSearch(searchValue);
+    form.reset();
   };
 
   return (
-    <form className={styles.SearchContainer} onSubmit={handleSubmit}>
-      <div className={styles.SearchInputContainer}>
-      <button type="submit" className={styles.SearchButton}>
-          <FaSearch className={styles.SearchIcon} />
-        </button>
+    <header className={css.searchBar}>
+      <form className={css.searchForm} onSubmit={handleSubmit}>
         <input
+          className={css.searchInput}
           type="text"
-          value={query}
-          onChange={handleChange}
-          className={styles.SearchInput}
+          name="searchInput"
+          autoComplete="off"
+          autoFocus
           placeholder="Search images and photos"
         />
-        
-      </div>
-    </form>
+        <button
+          className={css.searchBtn}
+          type="submit"
+          aria-label="search images and photos"
+          title="Search"
+        >
+          <CiSearch />
+        </button>
+      </form>
+      <Toaster />
+    </header>
   );
 };
 
